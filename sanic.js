@@ -18,36 +18,31 @@ const scraper = (t, p) => {
   const thread = t;
   const numPage = p;
 
-  const url = `https://www.pngitem.com/so/${thread}/${
-    numPage == 1 ? "" : numPage+"/"
+  const url = `https://www.kindpng.com/free/${thread}/${
+    numPage == 1 ? "" : numPage + "/"
   }`;
   console.log({ url });
   let srcs;
- 
+
   (async () => {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
-   
+
     await page.goto(url, {
       waitUntil: "networkidle2",
     });
     srcs = await page.evaluate(() => {
-
-      data = Array.from(
-        document.querySelectorAll(
-          "img.lazy"
-        )
-      ).map((a) => {
-        const regex1 = /png./i;
+      data = Array.from(document.querySelectorAll("img.lazy")).map((a) => {
+        const regex1 = /[/]p./i;
         const regex2 = /[/]s[/]/i;
-        let r = a.dataset.original.replace(regex1, 'www.');
-        r =	r.replace(regex2, '/b/');
+        let r = a.dataset.original.replace(regex1, "/www.");
+        r = r.replace(regex2, "/b/");
         return r;
       });
 
       return data;
     });
-    console.log(srcs)
+    console.log(srcs);
 
     await browser.close();
 
@@ -62,7 +57,6 @@ const scraper = (t, p) => {
       fs.mkdirSync(
         `./images/threads/${thread}/${numPage === "" ? 1 : numPage}`
       );
-
 
     let options = {
       imgs: srcs.map((src) => {
@@ -84,8 +78,6 @@ const scraper = (t, p) => {
       });
   })();
 };
-
-
 
 const createDir = () => {
   if (!fs.existsSync(`./images`)) {
