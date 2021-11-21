@@ -1,5 +1,4 @@
 const puppeteer = require("puppeteer");
-//const download = require("image-downloader");
 const imageDownloader = require("node-image-downloader");
 
 const fs = require("fs");
@@ -18,7 +17,7 @@ const scraper = (t, p) => {
   const thread = t;
   const numPage = p;
 
-  const url = `https://www.pngitem.com/so/${thread}/${
+  const url = `https://www.kindpng.com/free/${thread}/${
     numPage == 1 ? "" : numPage + "/"
   }`;
   console.log({ url });
