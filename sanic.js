@@ -1,5 +1,4 @@
 const puppeteer = require("puppeteer");
-//const download = require("image-downloader");
 const imageDownloader = require("node-image-downloader");
 
 const fs = require("fs");
@@ -33,7 +32,7 @@ const scraper = (t, p) => {
     });
     srcs = await page.evaluate(() => {
       data = Array.from(document.querySelectorAll("img.lazy")).map((a) => {
-        const regex1 = /[/]p./i;
+        const regex1 = /[/]png./i;
         const regex2 = /[/]s[/]/i;
         let r = a.dataset.original.replace(regex1, "/www.");
         r = r.replace(regex2, "/b/");
