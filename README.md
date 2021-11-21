@@ -1,4 +1,4 @@
-# 4chan-Scraper
-Downloads all types of images from a thread in a page
+# Pngitem.com scraper
+Downloads all images from it in high quality
 
-Use : node sanic.js [thread] [page]
+Use : node sanic.js [search] [page]
