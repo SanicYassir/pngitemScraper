@@ -14,7 +14,7 @@ if (!args.thread) {
   process.exit(1);
 }
 
-const Scrape4chanImages = (t, p) => {
+const scraper = (t, p) => {
   const thread = t;
   const numPage = p;
 
@@ -98,4 +98,4 @@ const createDir = () => {
 };
 
 createDir();
-Scrape4chanImages(args.thread, args.page);
+scraper(args.thread, args.page);
