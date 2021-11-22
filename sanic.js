@@ -17,7 +17,7 @@ const scraper = (t, p) => {
   const thread = t;
   const numPage = p;
 
-  const url = `https://www.kindpng.com/free/${thread}/${
+  const url = `https://www.pngitem.com/so/${thread}/${
     numPage == 1 ? "" : numPage + "/"
   }`;
   console.log({ url });
