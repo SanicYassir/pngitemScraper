@@ -10,16 +10,14 @@ let args = {
 
 if (!args.thread) {
   console.log("node sanic.js [thread] [page]");
+  console.log("OR");
+  console.log("node sanic.js [thread] [fromPage]-[toPage]");
   process.exit(1);
 }
 
-const scraper = (t, p) => {
-  const thread = t;
-  const numPage = p;
+const scraper = (thread, numPage, folderName) => {
 
-  const url = `https://www.pngitem.com/so/${thread}/${
-    numPage == 1 ? "" : numPage + "/"
-  }`;
+  const url = `https://www.pngitem.com/so/${thread}/${numPage === 1 ? "" : numPage + "/"}`;
   console.log({ url });
   let srcs;
 
@@ -48,20 +46,14 @@ const scraper = (t, p) => {
     if (!fs.existsSync(`./images/threads/${thread}`)) {
       fs.mkdirSync(`./images/threads/${thread}`);
     }
-    if (
-      !fs.existsSync(
-        `./images/threads/${thread}/${numPage === "" ? 1 : numPage}`
-      )
-    )
-      fs.mkdirSync(
-        `./images/threads/${thread}/${numPage === "" ? 1 : numPage}`
-      );
+
+    if (!fs.existsSync(`./images/threads/${thread}/${folderName}`)){
+      fs.mkdirSync(`./images/threads/${thread}/${folderName}`);
+    }
 
     let options = {
-      imgs: srcs.map((src) => {
-        return { uri: src };
-      }),
-      dest: `./images/threads/${thread}/${numPage === "" ? 1 : numPage}`,
+      imgs: srcs.map((src) => ({ uri: src })),
+      dest: `./images/threads/${thread}/${folderName}`,
     };
 
     console.log("Images count : " + options.imgs.length);
@@ -71,7 +63,7 @@ const scraper = (t, p) => {
       .then((info) => {
         console.log("all done", info);
       })
-      .catch((error, response, body) => {
+      .catch((error) => {
         console.log("something goes bad!");
         console.log(error);
       });
@@ -88,5 +80,18 @@ const createDir = () => {
   }
 };
 
-createDir();
-scraper(args.thread, args.page);
+function main() {
+  createDir();
+  const page = args.page
+
+  if(page.includes('-')){
+    const [fromPage, toPage] = page.split("-")
+    for (let i = fromPage; i <= toPage; i++) {
+      scraper(args.thread, i, page);
+    }
+  }else{
+    scraper(args.thread, page, page);
+  }
+}
+
+main()
