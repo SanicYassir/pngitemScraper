@@ -1,4 +1,9 @@
 # Pngitem.com scraper
 Downloads all images from it in high quality
 
-Use : node sanic.js [search] [page]
+Use : 
+```bash 
+$ node sanic.js [search] [page]
+# OR
+$ node sanic.js [thread] [fromPage]-[toPage]
+```
